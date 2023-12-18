@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">SelfIntroduction</string>
+    <string name="text_id">아이디</string>
+    <string name="text_pwd">비밀번호</string>
+    <string name="hint_input_pwd">비밀번호를 입력하세요.</string>
+    <string name="hint_input_id">아이디를 입력하세요.</string>
+    <string name="text_sign_in">로그인</string>
+    <string name="text_sign_up">회원가입</string>
+    <string name="text_name">이름</string>
+    <string name="hint_input_name">이름을 입력하세요.</string>
+    <string name="text_finish">종료</string>
+    <string name="text_ptr_name">이름: 심수빈</string>
+    <string name="text_prt_age">나이: 28</string>
+    <string name="text_prt_mbti">MBTI: ISFP</string>
+    <string name="text_pwd_check">비밀번호 확인</string>
+    <string name="text_email">이메일</string>
+    <string name="text_name_message">이름을 입력해주세요.</string>
+    <string name="text_email_message">이메일을 입력해주세요.</string>
+
+    <string-array name="emailList">
+        <item>gmail.com</item>
+        <item>kakao.com</item>
+        <item>naver.com</item>
+        <item>직접 입력</item>
+    </string-array>
+</resources>
