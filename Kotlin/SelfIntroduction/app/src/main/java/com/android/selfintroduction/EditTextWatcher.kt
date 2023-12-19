@@ -4,6 +4,7 @@ import android.text.Editable
 import android.text.TextWatcher
 
 // 챌린지반 과제
+// TextWatcher를 공통 클래스로 만들어 사용한다.
 // 원하는 함수만 사용할 수 있게 하기 위해 nullable한 람다 함수를 매개 변수로 받도록 한다.
 class EditTextWatcher(
     private val afterChanged: ((Editable?) -> Unit) = {},

@@ -1,6 +1,5 @@
 package com.android.selfintroduction
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Patterns
@@ -23,8 +22,8 @@ class ValidationActivity : AppCompatActivity() {
     private val etEmail: EditText by lazy {
         findViewById(R.id.et_email)
     }
-    private val etAddress: EditText by lazy {
-        findViewById(R.id.et_address)
+    private val etEmailServiceProvider: EditText by lazy {
+        findViewById(R.id.et_email_service_provider)
     }
     private val etPwd: EditText by lazy {
         findViewById(R.id.et_pwd)
@@ -32,8 +31,8 @@ class ValidationActivity : AppCompatActivity() {
     private val etPwdCheck: EditText by lazy {
         findViewById(R.id.et_pwd_check)
     }
-    private val spinner: Spinner by lazy {
-        findViewById(R.id.sp_email)
+    private val spServiceProvider: Spinner by lazy {
+        findViewById(R.id.sp_service_provider)
     }
     private val tvNameMessage: TextView by lazy {
         findViewById(R.id.tv_name_message)
@@ -55,7 +54,7 @@ class ValidationActivity : AppCompatActivity() {
         get() = listOf(
             etName,
             etEmail,
-            etAddress,
+            etEmailServiceProvider,
             etPwd,
             etPwdCheck
         )
@@ -67,33 +66,38 @@ class ValidationActivity : AppCompatActivity() {
         initView()
     }
 
-    private fun setSpinner() {
-        // 스피너에 아이템 등록
-        spinner.adapter = ArrayAdapter.createFromResource(
+    private fun setSpinnerServiceProvider() {
+        // 스피너에 어댑터 등록한다.
+        // R.array.emailList : strings.xml 내의 emailList 아이템 목록을 추가한다.
+        spServiceProvider.adapter = ArrayAdapter.createFromResource(
             this,
             R.array.emailList,
             android.R.layout.simple_spinner_item
         )
 
-        val lastIndex = spinner.adapter.count - 1
-        // init spinner
-        spinner.setSelection(lastIndex, false)
+        val lastIndex = spServiceProvider.adapter.count - 1 // 스피너의 마지막 요소
+        // onItemSelectedListener가 최초에 실행되는 문제를 방지하고자 Listener 이전에 setselection(position, false)을 해준다.
+        // 마지막 요소인 "직접 입력"으로 초기화
+        spServiceProvider.setSelection(lastIndex, false)
 
-        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        // 사용자가 선택한 값을 알기 위해 Listener를 추가한다.
+        spServiceProvider.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,
                 position: Int,
                 id: Long
             ) {
-                // 이메일 유효성 검사
-                if (position == lastIndex) {
-                    etAddress.isEnabled = true
-                    etAddress.setText("")
+                if (position == lastIndex) {  // "직접 입력" 일 경우
+                    // EditText가 활성화 된다.
+                    etEmailServiceProvider.isEnabled = true
+                    etEmailServiceProvider.setText("")
                 } else {
-                    etAddress.isEnabled = false
-                    val text = "@${spinner.selectedItem}"
-                    etAddress.setText(text)
+                    // EditText가 비활성화 되고 선택한 값을 출력해준다.
+                    // gmail.com 선택시 @gmail.com 출력
+                    etEmailServiceProvider.isEnabled = false
+                    val text = "@${spServiceProvider.selectedItem}"
+                    etEmailServiceProvider.setText(text)
                 }
             }
 
@@ -104,39 +108,41 @@ class ValidationActivity : AppCompatActivity() {
     private fun initView() {
         setTextChangeListener()
         setOnFocusChangedListener()
-        setSpinner()
+        setSpinnerServiceProvider()
 
         btnSignUp.setOnClickListener {
+            // TODO 회원가입 버튼 클릭시
         }
     }
 
-    private fun setTextChangeListener() {
+    private fun setTextChangeListener() {  // addTextChangedListener
         editTexts.forEach { editText ->
             editText.addTextChangedListener(EditTextWatcher(
                 onChanged = { _, _, _, _ ->
-                    editText.setErrorMessage()
-                    setButtonEnable()
+                    editText.setErrorMessage()  // EditText 유효성 체크 후 에러 텍스트 노출
+                    setButtonEnable()  // 유효성 체크에 따라 버튼 활성화 상태 변경
                 }
             ))
         }
     }
 
-    private fun setOnFocusChangedListener() {
+    private fun setOnFocusChangedListener() {  // setOnFocusChangeListener
         editTexts.forEach { editText ->
             editText.setOnFocusChangeListener { _, hasFocus ->
                 if (!hasFocus) {
-                    editText.setErrorMessage()
-                    setButtonEnable()
+                    editText.setErrorMessage()  // EditText 유효성 체크 후 에러 텍스트 노출
+                    setButtonEnable()  // 유효성 체크에 따라 버튼 활성화 상태 변경
                 }
             }
         }
     }
 
+    // EditText별 유효성 체크 후 에러 텍스트 노출 및 Visibility 상태 변경
     private fun EditText.setErrorMessage() {
         val message = when (this) {
             etName -> getMessageValidName()
             etEmail -> getMessageValidEmail()
-            etAddress -> getMessageValidEmailRegex()
+            etEmailServiceProvider -> getMessageValidEmailRegex()
             etPwd -> getMessageValidPassword()
             etPwdCheck -> getConfirmPassword()
             else -> return
@@ -144,7 +150,7 @@ class ValidationActivity : AppCompatActivity() {
 
         val textView = when (this) {
             etName -> tvNameMessage
-            etEmail, etAddress -> tvEmailMessage
+            etEmail, etEmailServiceProvider -> tvEmailMessage
             etPwd -> tvPwdMessage
             etPwdCheck -> tvPwdCheckMessage
             else -> return
@@ -155,51 +161,58 @@ class ValidationActivity : AppCompatActivity() {
     }
 
 
+    // TextView가 isBlank()가 아닐 경우 에러 메시지가 노출 된 상태기에 TextView를 VISIBLE
+    // isBlank()일 경우는 유효성 검사에 성공한 상태기에 GONE 처리 해준다.
     private fun TextView.setVisibility() {
         visibility = if (text.isBlank()) GONE else VISIBLE
     }
 
     private fun getMessageForInput(editText: EditText, message: String): String =
-        if (editText.text.isBlank()) {
+        if (editText.text.isBlank()) {    // EditText에 입력 된 값이 없을 경우
             message
         } else {
             ""
         }
 
+    // 이름 유효성 체크
     private fun getMessageValidName(): String =
-        getMessageForInput(etName, "이름을 입력해주세요.")
+        getMessageForInput(etName, getString(R.string.text_input_name))
 
+    // 이메일 유효성 체크
     private fun getMessageValidEmail(): String =
-        getMessageForInput(etEmail, "이메일을 입력해주세요.")
+        getMessageForInput(etEmail, getString(R.string.text_input_email))
 
-
+    // 이메일 정규 표현식 체크
     private fun getMessageValidEmailRegex(): String {
-        val text = etAddress.text.toString()
+        val text = etEmailServiceProvider.text.toString()
         val email = etEmail.text.toString() + text
         return when {
-            text.isBlank() -> "이메일 주소를 입력해주세요."
-            !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> "이메일 형식을 확인해주세요."
+            text.isBlank() -> getString(R.string.text_input_service_provider)
+            !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> getString(R.string.text_check_email)
             else -> ""
         }
     }
 
-    private fun getMessageValidPassword(): String {  // 비밀번호 유효성 체크
+    // 비밀번호 유효성 체크
+    private fun getMessageValidPassword(): String {
         val text = etPwd.text.toString()
         val pattern = "^(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z[0-9]]{10,}\$"
         return when {
-            text.length < 10 -> "10자 이상 입력해주세요."
-            !Pattern.matches(pattern, text) -> "영문과 숫자를 포함해주세요."
+            text.length < 10 -> getString(R.string.text_check_pwd_length)
+            !Pattern.matches(pattern, text) -> getString(R.string.text_check_pwd_regex)
             else -> ""
         }
     }
 
-    private fun getConfirmPassword(): String =  // 비밀번호 확인
+    // 비밀번호가 일치하는지 체크
+    private fun getConfirmPassword(): String =
         if (etPwd.text.toString() != etPwdCheck.text.toString()) {
-            "비밀번호가 일치하지 않습니다."
+            getString(R.string.text_pwd_mismach)
         } else {
             ""
         }
 
+    // 버튼 활성화 상태 변경을 위한 함수
     private fun setButtonEnable() {
         btnSignUp.isEnabled = getMessageValidName().isBlank()
                 && getMessageValidEmail().isBlank()

@@ -55,11 +55,12 @@ class SignInActivity : AppCompatActivity() {
             }
 
             R.id.btnMoveSignUp -> {  // 회원가입
-//                val intent = Intent(this, SignUpActivity::class.java)
-//                activityResultLauncher.launch(intent)  // 데이터를 받아올 SignUpActivity 실행
+                val intent = Intent(this, SignUpActivity::class.java)
+                activityResultLauncher.launch(intent)  // 데이터를 받아올 SignUpActivity 실행
 
-                val intent = Intent(this, ValidationActivity::class.java)
-                activityResultLauncher.launch(intent)
+                // 챌린지 과제 확인 용도
+//                val intent = Intent(this, ValidationActivity::class.java)
+//                startActivity(intent)
             }
         }
     }
