@@ -25,10 +25,13 @@ fun main() {
         mainProduct.displayTitle(select)
 
         when (select) {
-            1, 2, 3 -> processMenu(getCategoryByNumber(select))
+            1, 2, 3 -> processMenu(getCategory(select))
             4 -> {
                 if (cart.displayCart()) {
-                    bank.outBalance(cart.getTotal())
+                    if (bank.outBalance(cart.getTotal())) { // 결제 성공
+                        // TODO 오더 추가
+                        cart.clearItem() // 카트 리셋
+                    }
                 }
             }
             5 -> {
@@ -42,11 +45,16 @@ fun main() {
     }
 }
 
+/*
+1) 선택한 카테고리별 메뉴 아이템 목록을 출력
+2) 추가로 입력 된 번호에 해당되는 아이템을 출력
+3) (2) 아이템을 장바구니에 추가 혹은 뒤로가기
+ */
 fun processMenu(category: String) {
     productManager.displayMenu(category)
 
     while (true) {
-        val number = getUserInputAsNumber()
+        val number = getInputNumber()
 
         if (number == 0) {
             break
@@ -62,16 +70,16 @@ fun processMenu(category: String) {
     }
 }
 
-fun getCategoryByNumber(select: Int): String {
+fun getCategory(select: Int): String {
     return when (select) {
         1 -> BURGER
         2 -> FRIED
         3 -> BEVERAGE
-        else -> throw IllegalArgumentException("Invalid category number: $select")
+        else -> throw IllegalArgumentException("There are no applicable categories.")
     }
 }
 
-fun getUserInputAsNumber(): Int {
+fun getInputNumber(): Int {
     while (true) {
         val input = readln()
         if (input.isNumber()) {

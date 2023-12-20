@@ -15,6 +15,11 @@ class Cart {
         }
     }
 
+    fun clearItem() {
+        cartList.clear()
+        total = 0
+    }
+
     fun checkAddItem(item: AbstractMenu?): Boolean {
         return if (item == null) {
             println("선택하신 상품이 존재하지 않습니다. 관리자에게 문의해주세요.")
@@ -25,17 +30,18 @@ class Cart {
                         "위 메뉴를 장바구니에 추가하시겠습니까?\n" +
                         "1. 확인    2. 취소"
             )
-            getUserConfirmation(item)
+            getUserConfirm(item)
         }
     }
 
-    private fun getUserConfirmation(item: AbstractMenu): Boolean {
+    private fun getUserConfirm(item: AbstractMenu): Boolean {
         while (true) {
-            return when (getUserInputAsNumber()) {
+            return when (getInputNumber()) {
                 1 -> {
                     println("${item.name}이(가) 장바구니에 추가되었습니다.")
                     true
                 }
+
                 2 -> false
                 else -> {
                     println("잘 못 된 번호를 입력했어요. 다시 입력해주세요.")
@@ -50,23 +56,23 @@ class Cart {
             println("장바구니가 비어 있습니다.")
             false
         } else {
-            printCartItems()
+            displayCartItems()
             println(
                 "\n[ Total ]\n" +
                         "₩ ${decimalFormat(total)}"
             )
-            getUserChoice()
+            getUserSelect()
         }
     }
 
-    private fun printCartItems() {
+    private fun displayCartItems() {
         val listGroup = cartList.groupingBy { it }.eachCount()
         for ((item, count) in listGroup) {
             println("${item.displayInfo()} (${count})")
         }
     }
 
-    private fun getUserChoice(): Boolean {
+    private fun getUserSelect(): Boolean {
         println("1. 주문    2. 메뉴판")
         while (true) {
             val input = readln()
