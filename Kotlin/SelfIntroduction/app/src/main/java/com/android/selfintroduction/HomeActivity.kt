@@ -28,7 +28,6 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-
         ivIntro.setImageResource(getResId())  // 사진 랜덤 표시
 
         val idData = intent.getStringExtra("idFromSignInActivity")  // 전달 받은 id 값 출력

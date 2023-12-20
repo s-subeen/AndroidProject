@@ -79,25 +79,27 @@ class ValidationActivity : AppCompatActivity() {  // 챌린지반 과제
          */
         spServiceProvider.setSelection(lastIndex, false)
 
-        spServiceProvider.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {  // 사용자가 선택한 값을 알기 위해 Listener를 추가한다.
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                /*
-                "직접 입력"일 경우는 ""로 입력 되어 있는 값을 지우고 EditText를 활성화
-                아닐 경우 선택된 값을 출력 하고 EditText를 비 활성화
-                 */
-                val text = if (position == lastIndex) "" else "@${spServiceProvider.selectedItem}"
+        spServiceProvider.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {  // 사용자가 선택한 값을 알기 위해 Listener를 추가한다.
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    /*
+                    "직접 입력"일 경우는 ""로 입력 되어 있는 값을 지우고 EditText를 활성화
+                    아닐 경우 선택된 값을 출력 하고 EditText를 비 활성화
+                     */
+                    val text =
+                        if (position == lastIndex) "" else "@${spServiceProvider.selectedItem}"
 
-                etEmailServiceProvider.isEnabled = position == lastIndex
-                etEmailServiceProvider.setText(text)
+                    etEmailServiceProvider.isEnabled = position == lastIndex
+                    etEmailServiceProvider.setText(text)
+                }
+
+                override fun onNothingSelected(p0: AdapterView<*>?) = Unit
             }
-
-            override fun onNothingSelected(p0: AdapterView<*>?) = Unit
-        }
     }
 
     private fun initView() {
@@ -132,6 +134,7 @@ class ValidationActivity : AppCompatActivity() {  // 챌린지반 과제
         }
     }
 
+
     private fun EditText.setErrorMessage() {  // EditText별 유효성 체크 후 에러 텍스트 노출 및 Visibility 상태 변경
         val message = when (this) {
             etName -> getMessageValidName()
@@ -163,12 +166,13 @@ class ValidationActivity : AppCompatActivity() {  // 챌린지반 과제
     }
 
     private fun getMessageForInput(editText: EditText, message: String): String =
-        if (editText.text.isBlank()) {
+        if (editText.text.isBlank()) {    // EditText에 입력 된 값이 없을 경우
             message
         } else {
             ""
         }
 
+    // 이름 유효성 체크
     private fun getMessageValidName(): String =
         getMessageForInput(etName, getString(R.string.text_input_name))  // 이름 유효성 체크
 
@@ -185,7 +189,8 @@ class ValidationActivity : AppCompatActivity() {  // 챌린지반 과제
         }
     }
 
-    private fun getMessageValidPassword(): String {  // 비밀번호 유효성 체크
+    // 비밀번호 유효성 체크
+    private fun getMessageValidPassword(): String {
         val text = etPwd.text.toString()
         val pattern = "^(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z[0-9]]{10,}\$"
         return when {
