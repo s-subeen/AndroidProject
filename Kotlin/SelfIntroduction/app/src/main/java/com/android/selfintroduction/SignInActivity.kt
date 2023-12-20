@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
-import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 
@@ -26,8 +25,6 @@ class SignInActivity : AppCompatActivity() {
             ActivityResultContracts.StartActivityForResult()
         ) { result ->
             if (result.resultCode == RESULT_OK) {
-                // SignUpActivity 전달 한 데이터를 getStringExtra를 사용해 받는다.
-
                 val receiveId = result.data?.getStringExtra("idFromSignUpActivity") ?: ""
                 val receivePwd = result.data?.getStringExtra("pwdFromSignUpActivity") ?: ""
 
@@ -43,28 +40,23 @@ class SignInActivity : AppCompatActivity() {
                 val id = editId.text.toString()
                 val pwd = editPwd.text.toString()
 
-
                 if (id.isBlank() || pwd.isBlank()) {
-                    makeToast("아이디 또는 비밀번호를 확인해주세요.")
+                    makeToast(this, getString(R.string.text_check_info))
                 } else {
                     val intent = Intent(this, HomeActivity::class.java)
                     intent.putExtra("idFromSignInActivity", id)
                     startActivity(intent)
-                    makeToast("로그인 성공")
+                    makeToast(this, getString(R.string.text_success_login))
                 }
             }
 
-            R.id.btnMoveSignUp -> {  // 회원가입
-//                val intent = Intent(this, SignUpActivity::class.java)
-//                activityResultLauncher.launch(intent)  // 데이터를 받아올 SignUpActivity 실행
+            R.id.btnMoveSignUp -> {  // 회원 가입
+                val intent = Intent(this, SignUpActivity::class.java)
+                activityResultLauncher.launch(intent)  // 데이터를 받아올 SignUpActivity 실행
 
-                val intent = Intent(this, ValidationActivity::class.java)
-                activityResultLauncher.launch(intent)
+//                val intent = Intent(this, ValidationActivity::class.java)  // 챌린지반 과제
+//                startActivity(intent)
             }
         }
-    }
-
-    private fun makeToast(text: String) {
-        Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
     }
 }

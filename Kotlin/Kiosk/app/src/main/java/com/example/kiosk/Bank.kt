@@ -1,7 +1,12 @@
 package com.example.kiosk
 
+import java.time.LocalDateTime
+
 class Bank {
     private var amount: Int = 0
+    private val dateAndTime: LocalDateTime by lazy {
+        LocalDateTime.now()
+    }
 
     init {
         val initAmount = (10000..30000).random()

@@ -50,7 +50,7 @@
         app:layout_constraintTop_toBottomOf="@id/tv_email" />
 
     <EditText
-        android:id="@+id/et_address"
+        android:id="@+id/et_email_service_provider"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:textSize="14sp"
@@ -60,14 +60,14 @@
         app:layout_constraintTop_toTopOf="@id/et_email" />
 
     <Spinner
-        android:id="@+id/sp_email"
+        android:id="@+id/sp_service_provider"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
-        app:layout_constraintBottom_toBottomOf="@id/et_address"
+        app:layout_constraintBottom_toBottomOf="@id/et_email_service_provider"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/et_address"
-        app:layout_constraintTop_toTopOf="@id/et_address" />
+        app:layout_constraintStart_toEndOf="@id/et_email_service_provider"
+        app:layout_constraintTop_toTopOf="@id/et_email_service_provider" />
 
     <TextView
         android:id="@+id/tv_email_message"
@@ -91,6 +91,7 @@
         style="@style/ThemeEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:hint="@string/text_pwd_condition"
         android:inputType="textPassword"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_pwd" />
