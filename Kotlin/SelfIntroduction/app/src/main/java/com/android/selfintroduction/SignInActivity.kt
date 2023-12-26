@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.EditText
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import com.android.selfintroduction.Toast.makeToast
 
 class SignInActivity : AppCompatActivity() {
     private lateinit var activityResultLauncher: ActivityResultLauncher<Intent>  // 전역변수 선언

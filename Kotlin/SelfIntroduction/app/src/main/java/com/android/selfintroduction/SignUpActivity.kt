@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import com.android.selfintroduction.Toast.makeToast
 
 class SignUpActivity : AppCompatActivity() {
     private val editName: EditText by lazy {
