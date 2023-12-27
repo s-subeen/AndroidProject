@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import com.android.selfintroduction.Data.dataId
 import kotlin.random.Random
 
 class HomeActivity : AppCompatActivity() {
@@ -30,7 +31,7 @@ class HomeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_home)
         ivIntro.setImageResource(getResId())  // 사진 랜덤 표시
 
-        val idData = intent.getStringExtra("idFromSignInActivity")  // 전달 받은 id 값 출력
+        val idData = intent.getStringExtra(dataId)  // 전달 받은 id 값 출력
         val strId = "아이디: $idData"
         tvId.text = strId
 

@@ -12,6 +12,8 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
 import android.widget.TextView
+import androidx.core.view.isVisible
+import androidx.core.widget.addTextChangedListener
 import java.util.regex.Pattern
 
 class ValidationActivity : AppCompatActivity() {  // 챌린지반 과제
@@ -114,12 +116,10 @@ class ValidationActivity : AppCompatActivity() {  // 챌린지반 과제
 
     private fun setTextChangeListener() {  // addTextChangedListener
         editTexts.forEach { editText ->
-            editText.addTextChangedListener(EditTextWatcher(
-                onChanged = { _, _, _, _ ->
-                    editText.setErrorMessage()  // EditText 유효성 체크 후 에러 텍스트 노출
-                    setButtonEnable()  // 유효성 체크에 따라 버튼 활성화 상태 변경
-                }
-            ))
+            editText.addTextChangedListener {
+                editText.setErrorMessage()  // EditText 유효성 체크 후 에러 텍스트 노출
+                setButtonEnable()  // 유효성 체크에 따라 버튼 활성화 상태 변경
+            }
         }
     }
 
@@ -154,15 +154,7 @@ class ValidationActivity : AppCompatActivity() {  // 챌린지반 과제
         }
 
         textView.text = message
-        textView.setVisibility()
-    }
-
-    /*
-    TextView가 isBlank()가 아닐 경우 에러 메시지가 노출 된 상태기에 TextView를 VISIBLE
-    isBlank()일 경우는 유효성 검사에 성공한 상태기에 GONE 처리 해준다.
-     */
-    private fun TextView.setVisibility() {
-        visibility = if (text.isBlank()) GONE else VISIBLE
+        textView.isVisible = text.isNotBlank()
     }
 
     private fun getMessageForInput(editText: EditText, message: String): String =

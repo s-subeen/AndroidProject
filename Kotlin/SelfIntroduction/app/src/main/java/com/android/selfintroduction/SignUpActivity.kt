@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import com.android.selfintroduction.Data.dataId
+import com.android.selfintroduction.Data.dataPwd
 import com.android.selfintroduction.Toast.makeToast
 
 class SignUpActivity : AppCompatActivity() {
@@ -27,17 +29,17 @@ class SignUpActivity : AppCompatActivity() {
 
         btnSignUp.setOnClickListener {
             if (editName.text.isBlank() || editId.text.isBlank() || editPwd.text.isBlank()) {
-                makeToast(this, getString(R.string.text_empty_info))
+                makeToast(getString(R.string.text_empty_info))
             } else {
                 val intent = Intent(
                     this, SignInActivity::class.java
                 ).apply {  // apply를 사용해 자신을 다시 반환
-                    putExtra("idFromSignUpActivity", editId.text.toString())
-                    putExtra("pwdFromSignUpActivity", editPwd.text.toString())
+                    putExtra(dataId, editId.text.toString())
+                    putExtra(dataPwd, editPwd.text.toString())
                 }
 
                 setResult(RESULT_OK, intent) // 데이터를 전달 하기 위해 setResult 등록
-                if (!isFinishing) finish()
+                if (isFinishing.not()) finish()
             }
         }
     }
