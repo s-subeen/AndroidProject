@@ -11,7 +11,11 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import com.android.selfintroduction.Data.dataId
 import com.android.selfintroduction.Data.dataPwd
+import com.android.selfintroduction.Data.dataType
+import com.android.selfintroduction.Data.typeSignIn
+import com.android.selfintroduction.Data.typeSignUp
 import com.android.selfintroduction.Toast.makeToast
+import com.android.selfintroduction.UserManager.confirmSignIn
 
 class SignInActivity : AppCompatActivity(), OnClickListener {
 
@@ -57,22 +61,24 @@ class SignInActivity : AppCompatActivity(), OnClickListener {
                 val id = editId.text.toString()
                 val pwd = editPwd.text.toString()
 
-                if (id.isBlank() || pwd.isBlank()) {
-                    makeToast(getString(R.string.text_check_info))
-                } else {
-                    val intent = Intent(this, HomeActivity::class.java)
-                    intent.putExtra(dataId, id)
-                    startActivity(intent)
-                    makeToast(getString(R.string.text_success_login))
+                when {
+                    id.isBlank() || pwd.isBlank() -> makeToast(getString(R.string.text_empty_info))
+                    !confirmSignIn(id, pwd) -> makeToast(getString(R.string.text_check_info))
+                    else -> {
+                        val intent = Intent(this, SignUpActivity::class.java)
+                        intent.putExtra(dataType, typeSignIn)
+                        intent.putExtra(dataId, id)
+                        startActivity(intent)
+                        makeToast(getString(R.string.text_success_login))
+                    }
                 }
             }
 
             R.id.btnMoveSignUp -> {  // 회원 가입
                 val intent = Intent(this, SignUpActivity::class.java)
+                intent.putExtra(dataType, typeSignUp)
                 activityResultLauncher.launch(intent)  // 데이터를 받아올 SignUpActivity 실행
 
-//                val intent = Intent(this, ValidationActivity::class.java)  // 챌린지반 과제
-//                startActivity(intent)
             }
         }
     }

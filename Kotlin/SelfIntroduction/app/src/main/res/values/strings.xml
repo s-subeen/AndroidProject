@@ -9,7 +9,7 @@
     <string name="text_prt_age">나이: 28</string>
     <string name="text_prt_mbti">MBTI: ISFP</string>
     <string name="text_name_message">이름을 입력해주세요.</string>
-    <string name="text_empty_info">입력되지 않은 정보가 있습니다.</string>
+    <string name="text_empty_info">아이디 또는 비밀번호를 입력해주세요.</string>
     <string name="text_success_login">로그인 성공</string>
     <string name="text_check_info">아이디 또는 비밀번호를 확인해주세요.</string>
 
@@ -27,10 +27,14 @@
     <string name="text_pwd_check">비밀번호 확인</string>
     <string name="text_sign_up">회원가입</string>
 
-    <string-array name="emailList">
-        <item>gmail.com</item>
-        <item>kakao.com</item>
-        <item>naver.com</item>
-        <item>직접 입력</item>
-    </string-array>
+    <string name="email_service_provider_gmail">gmail.com</string>
+    <string name="email_service_provider_kakao">kakao.com</string>
+    <string name="email_service_provider_naver">naver.com</string>
+    <string name="email_service_provider_direct">직접 입력</string>
+    <string name="text_btn_update">회원 수정</string>
+    <string name="text_confirm_sign_up">이미 존재 하는 이메일 입니다.</string>
+    <string name="text_success_sign_up">회원 가입 성공</string>
+    <string name="text_success_user_edit">회원 정보 수정을 완료 했습니다.</string>
+
+
 </resources>
