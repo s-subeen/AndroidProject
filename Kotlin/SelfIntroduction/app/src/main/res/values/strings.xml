@@ -18,8 +18,9 @@
     <string name="text_input_service_provider">서비스 제공사를 입력해주세요.</string>
     <string name="text_check_email">올바른 이메일 주소를 입력해주세요.</string>
     <string name="text_check_pwd_length">10자 이상 입력해주세요.</string>
-    <string name="text_check_pwd_regex">영문과 숫자를 포함해주세요.</string>
-    <string name="text_pwd_mismach">비밀번호가 일치하지 않습니다.</string>
+    <string name="text_check_pwd_regex">특수문자를 포함해주세요.</string>
+    <string name="text_check_pwd_uppercase">대문자를 포함해주세요.</string>
+    <string name="text_pwd_mismatch">비밀번호가 일치하지 않습니다.</string>
     <string name="text_pwd_condition">영문, 숫자, 10자 이상</string>
     <string name="text_name">이름</string>
     <string name="text_email">이메일</string>
@@ -35,6 +36,9 @@
     <string name="text_confirm_sign_up">이미 존재 하는 이메일 입니다.</string>
     <string name="text_success_sign_up">회원 가입 성공</string>
     <string name="text_success_user_edit">회원 정보 수정을 완료 했습니다.</string>
+    <string name="sign_up_pass" />
+
+    <string name="user_update">회원정보 수정</string>
 
 
 </resources>
